@@ -1,24 +1,22 @@
-import logo from './logo.svg';
+import {StyledEngineProvider} from '@mui/material/styles';
+import {IntelligentTable} from './components/IntelligentTable.tsx';
 import './App.css';
 
 function App() {
   return (
+    <StyledEngineProvider injectFirst>
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <h1>be intelligent.</h1>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Enter a ticker symbol and see if the stock is an intelligent pick.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <IntelligentTable sx={{
+          bgcolor:'#9c1d21',
+        }}/>
       </header>
     </div>
+    </StyledEngineProvider>
   );
 }
 
