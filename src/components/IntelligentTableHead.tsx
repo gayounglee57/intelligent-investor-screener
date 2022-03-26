@@ -6,11 +6,12 @@ import TableRow from '@mui/material/TableRow';
 export const IntelligentTableHead = () => (
     <TableHead>
         <TableRow>
-            <TableCell align="right">Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell align="right">Ticker Symbol</TableCell>
+            <TableCell align="right">Price</TableCell>
+            <TableCell align="right">TTM EPS</TableCell>
+            <TableCell align="right">Shares outstanding</TableCell>
+            <TableCell align="right">Most recent net income</TableCell>
+            <TableCell align="right">Most recent EPS</TableCell>
         </TableRow>
     </TableHead>
 );
