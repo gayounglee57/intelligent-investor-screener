@@ -12,11 +12,25 @@
   color: #d2af7c;
 }
 
-.MuiTableCell-root {
+.MuiTableCell-root, .MuiFormLabel-root {
+  color: white;
+  vertical-align: bottom;
+}
+
+.MuiInputBase-input, .MuiInput-input {
+  border-bottom: 1px solid white;
   color: white;
 }
 
 .MuiTableContainer-root {
   width: auto;
   margin: 24px;
+}
+
+.MuiTableCell-root {
+  text-align: left;
+}
+
+.MuiInputBase-root::before, .MuiInputBase-root::after {
+  display: none;
 }

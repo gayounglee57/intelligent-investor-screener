@@ -3,6 +3,7 @@ import axios from "axios";
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
+import Input from '@mui/material/Input';
 
 // config - hide api key with Node BE
 const url = 'https://yh-finance.p.rapidapi.com/stock/v3/get-statistics';
@@ -49,40 +50,41 @@ function createRows({price, defaultKeyStatistics}) {
 export const IntelligentTableBody = () => {
     const [data, setData] = React.useState(null);
     const [rows, setRows] = React.useState([
-        createData('HI', 159, 6.0, 24, 4.0),
+        createData('GOOG', 159, 6.0, 24, 4.0, 50),
+        createData('HI', 159, 6.0, 24, 4.0, 50),
     ]);
 
     React.useEffect(() => {
-        const fetchData = async () => {
-            await axios
-                .get(url, options)
-                .then((response) => {
-                    setData(response.data);
-                    console.log("done", data); 
-                    const dynamicRows = createRows(response.data);
-                    setRows(dynamicRows);
-                }
-            );
-        };
+        // const fetchData = async () => {
+        //     await axios
+        //         .get(url, options)
+        //         .then((response) => {
+        //             setData(response.data);
+        //             console.log("done", data); 
+        //             const dynamicRows = createRows(response.data);
+        //             setRows(dynamicRows);
+        //         }
+        //     );
+        // };
 
-        try {
-            // write tests
-            fetchData();
-        }
-        catch(e) {
-            console.error(e);
-        }
+        // try {
+        //     // write tests
+        //     fetchData();
+        // }
+        // catch(e) {
+        //     console.error(e);
+        // }
     }, [data]);
     
     return (
         <TableBody>
-            {rows.map((row) => (
+            {rows.map((row, index) => (
             <TableRow
                 key={row.tickerSymbol}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
                 <TableCell component="th" scope="row">
-                {row.tickerSymbol}
+                    {index === rows.length - 1 ? <Input placeholder="eg. GOOG" /> : row.tickerSymbol}
                 </TableCell>
                 <TableCell align="right">{row.price}</TableCell>
                 <TableCell align="right">{row.epsTtm}</TableCell>
