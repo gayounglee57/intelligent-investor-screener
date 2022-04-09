@@ -10,7 +10,7 @@ export const IntelligentTableHead = () => (
             <TableCell align="right">Are EPS positive?</TableCell>
             <TableCell align="right">Are P/E ratios below 25?</TableCell>
             <TableCell align="right">Is price smaller than book value doubled?</TableCell>
-            <TableCell align="right">Is net value at least half of total value?</TableCell>
+            <TableCell align="right">Is long term debt conservatively financed?</TableCell>
             <TableCell align="right">Are liabilities doubled not greater than assets?</TableCell>
         </TableRow>
     </TableHead>

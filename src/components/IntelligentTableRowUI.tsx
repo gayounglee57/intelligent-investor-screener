@@ -6,7 +6,7 @@ function createData(
   epsEvaluation: string,
   peRatioEvaluation: string,
   bookValueEvaluation: string,
-  netValueEvaluation: string,
+  longTermDebtEvaluation: string,
   liabilitiesEvaluation: string
 ) {
   return {
@@ -14,7 +14,7 @@ function createData(
     epsEvaluation,
     peRatioEvaluation,
     bookValueEvaluation,
-    netValueEvaluation,
+    longTermDebtEvaluation,
     liabilitiesEvaluation,
   };
 }
@@ -24,7 +24,17 @@ function getBooleanEmoji(evaluation: boolean) {
   return evaluation ? '✨' : '👎🏽';
 }
 
-function getEpsEvaluation(epsMostRecent: number, epsTtm: number) {
+// function getEpsEvaluation(epsMostRecent: number, epsTtm: number) {
+//   const epsBoolean = epsMostRecent > 0 && epsTtm > 0;
+//   return getBooleanEmoji(epsBoolean);
+// }
+
+// turn these into utils of separate file and write tests to QA!
+function getEpsEvaluation(defaultKeyStatistics: object) {
+  const sharesOutstanding: number = defaultKeyStatistics.sharesOutstanding.raw;
+  const netIncome: object = defaultKeyStatistics.netIncomeToCommon;
+  const epsMostRecent: string = (netIncome.raw / sharesOutstanding);
+  const epsTtm = defaultKeyStatistics.trailingEps.raw;
   const epsBoolean = epsMostRecent > 0 && epsTtm > 0;
   return getBooleanEmoji(epsBoolean);
 }
@@ -39,20 +49,31 @@ function getBookValueEvaluation(bookValue: number, priceValue: number) {
   return getBooleanEmoji(bookValueBoolean);
 }
 
-function getNetValueEvaluation(bookValue, sharesOutstanding, marketCap) {
+function getNetValueEvaluation(bookValue: number, sharesOutstanding: number, marketCap: number) {
   const netValue = bookValue * sharesOutstanding;
   const netValueBoolean = (netValue / marketCap) >= 0.5;
   return getBooleanEmoji(netValueBoolean);
 }
 
-function getLiabilitesEvaluation(totalAssets, totalDebt) {
+function getLiabilitesEvaluation(totalAssets: number, totalDebt: number) {
   const liabilitiesEvaluation = totalDebt * 2 < totalAssets;
   return getBooleanEmoji(liabilitiesEvaluation);
 }
 
+function getLongTermDebtEvaluation(bookValue: number, totalAssets: number, latestLongTermDebt: number, sharesOutstanding: number) {
+  const financed = (totalAssets + latestLongTermDebt) / sharesOutstanding;
+  const longTermDebtBoolean = bookValue / financed > 0.5;
+  return getBooleanEmoji(longTermDebtBoolean);
+}
+
 // util - move if need to be shared
-function createRow({ price, defaultKeyStatistics, financialData }) {
-  const sharesOutstanding: number = "HI";
+function createRow({ price, defaultKeyStatistics, financialData }, balanceSheetData) {
+  const annualLongTermDebts: [object] = balanceSheetData.timeSeries.annualLongTermDebt;
+  const latestLongTermDebtReport: object = annualLongTermDebts[annualLongTermDebts.length - 1];
+  const latestLongTermDebt: number = latestLongTermDebtReport.reportedValue.raw;
+  console.log('latestLongTermDebt', latestLongTermDebt);
+
+  const sharesOutstanding: number = defaultKeyStatistics.sharesOutstanding.raw;
   const netIncome: object = defaultKeyStatistics.netIncomeToCommon;
   const epsMostRecent: string = (netIncome.raw / sharesOutstanding);
   const priceValue: number = price.regularMarketPrice.raw;
@@ -60,28 +81,29 @@ function createRow({ price, defaultKeyStatistics, financialData }) {
   const totalDebt: number = financialData.totalDebt.raw;
   const marketCap: number = price.marketCap.raw;
   const bookValue: number = defaultKeyStatistics.bookValue.raw
-  const totalAssets = (bookValue * sharesOutstanding) + totalDebt;
-  // netValue = bookValue * sharesOutstanding
-  console.log('sharesOutstanding', sharesOutstanding);
-  const epsEvaluation = getEpsEvaluation(epsMostRecent, defaultKeyStatistics.trailingEps.raw);
+  const totalAssets: number = bookValue * sharesOutstanding;
+
+  // const epsEvaluation = getEpsEvaluation(epsMostRecent, defaultKeyStatistics.trailingEps.raw);
+  const epsEvaluation = getEpsEvaluation(defaultKeyStatistics);
   const peRatioEvaluation = getPeRatioEvaluation(priceValue / epsMostRecent, priceValue / epsTtm);
   const bookValueEvaluation = getBookValueEvaluation(bookValue, priceValue);
-  const netValueEvaluation = getNetValueEvaluation(bookValue, sharesOutstanding, marketCap);
+  // const netValueEvaluation = getNetValueEvaluation(bookValue, sharesOutstanding, marketCap);
   const liabilitiesEvaluation = getLiabilitesEvaluation(totalAssets, totalDebt);
+  const longTermDebtEvaluation = getLongTermDebtEvaluation(bookValue, totalAssets, latestLongTermDebt, sharesOutstanding);
 
   const row = createData(
     price.symbol,
     epsEvaluation,
     peRatioEvaluation,
     bookValueEvaluation,
-    netValueEvaluation,
+    longTermDebtEvaluation,
     liabilitiesEvaluation,
   );
   return row;
 }
 
-export const IntelligentTableRowUI = ({ data }) => {
-  const row = createRow(data);
+export const IntelligentTableRowUI = ({ data, balanceSheetData }) => {
+  const row = createRow(data, balanceSheetData);
 
   return (
     <TableRow
@@ -94,7 +116,7 @@ export const IntelligentTableRowUI = ({ data }) => {
       <TableCell align="right">{row.epsEvaluation}</TableCell>
       <TableCell align="right">{row.peRatioEvaluation}</TableCell>
       <TableCell align="right">{row.bookValueEvaluation}</TableCell>
-      <TableCell align="right">{row.netValueEvaluation}</TableCell>
+      <TableCell align="right">{row.longTermDebtEvaluation}</TableCell>
       <TableCell align="right">{row.liabilitiesEvaluation}</TableCell>
     </TableRow>
   );
