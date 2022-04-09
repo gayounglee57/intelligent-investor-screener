@@ -1,4 +1,4 @@
-export const mockData = {
+export const mockStatsData = {
     "defaultKeyStatistics": {
         "annualHoldingsTurnover": {},
         "enterpriseToRevenue": {

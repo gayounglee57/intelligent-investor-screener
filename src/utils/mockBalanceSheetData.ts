@@ -1,4 +1,4 @@
-export const mockData = {
+export const mockBalanceSheetData = {
     "financialsTemplate": {
         "code": "N",
         "maxAge": 1
