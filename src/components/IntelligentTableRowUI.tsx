@@ -9,7 +9,7 @@ import {
   getBookValueEvaluation,
   getLiabilitesEvaluation,
   getLongTermDebtEvaluation,
-} from "../utils/utils.ts";
+} from "../utils/utils";
 
 function createData(
   tickerSymbol: string,

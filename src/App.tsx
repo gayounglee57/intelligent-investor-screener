@@ -1,8 +1,8 @@
-import {StyledEngineProvider} from '@mui/material/styles';
-import {QueryClient, QueryClientProvider} from "react-query";
-import {IntelligentTable} from './components/IntelligentTable.tsx';
-import {HeaderText} from './components/HeaderText.tsx';
-import './App.css';
+import { StyledEngineProvider } from "@mui/material/styles";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { IntelligentTable } from "./components/IntelligentTable";
+import { HeaderText } from "./components/HeaderText";
+import "./App.css";
 
 const queryClient = new QueryClient();
 

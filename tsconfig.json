@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "target": "es5",
+      "lib": [
+        "dom",
+        "dom.iterable",
+        "esnext"
+      ], 
+      "jsx": "react-jsx",
+      "esModuleInterop": true,
+    },
+    "include": [
+        "src"
+    ]
+}

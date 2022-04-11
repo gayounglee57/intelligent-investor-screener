@@ -1,7 +1,7 @@
 import * as React from "react";
 import TableBody from "@mui/material/TableBody";
-import { IntelligentTableRow } from "./IntelligentTableRow.tsx";
-import { IntelligentTableInput } from "./IntelligentTableInput.tsx";
+import { IntelligentTableRow } from "./IntelligentTableRow";
+import { IntelligentTableInput } from "./IntelligentTableInput";
 
 export const IntelligentTableBody = () => {
   const [tickers, setTickers] = React.useState([]);

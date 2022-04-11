@@ -1,8 +1,8 @@
 import * as React from "react";
 import axios, { AxiosRequestConfig } from "axios";
 import { useQuery } from "react-query";
-import { IntelligentTableRowUI } from "./IntelligentTableRowUI.tsx";
-import { TransitionText } from "./TransitionText.tsx";
+import { IntelligentTableRowUI } from "./IntelligentTableRowUI";
+import { TransitionText } from "./TransitionText";
 // import {mockData} from '../__tests__/mockStatsData.ts';
 
 // config - hide api key with Node BE, Next.js BE
