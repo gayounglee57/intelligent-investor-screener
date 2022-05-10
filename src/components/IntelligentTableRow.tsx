@@ -24,18 +24,28 @@ function getOptions(symbol: string, url: string): AxiosRequestConfig<any> {
 
 function useStats(symbol: string) {
   const options = getOptions(symbol, statsUrl);
-  return useQuery("stats-" + symbol, async () => {
-    const { data } = await axios.get(statsUrl, options);
-    return data;
-  });
+  return useQuery(
+    "stats-" + symbol,
+    async () => {
+      const { data } = await axios.get(statsUrl, options);
+      console.log("About to call stats");
+      return data;
+    },
+    { staleTime: 1000 * 60 * 60 }
+  );
 }
 
 function useBalanceSheet(symbol: string) {
   const options = getOptions(symbol, balanceSheetUrl);
-  return useQuery("balance-sheet-" + symbol, async () => {
-    const { data } = await axios.get(balanceSheetUrl, options);
-    return data;
-  });
+  return useQuery(
+    "balance-sheet-" + symbol,
+    async () => {
+      const { data } = await axios.get(balanceSheetUrl, options);
+      console.log("About to call balance sheet");
+      return data;
+    },
+    { staleTime: 1000 * 60 * 60 }
+  );
 }
 
 // function getMockData() {
@@ -43,7 +53,6 @@ function useBalanceSheet(symbol: string) {
 // }
 
 export const IntelligentTableRow = ({ ticker }) => {
-  console.log("ticker", ticker);
   // const statsData = getMockData();
   const {
     isLoading: isStatsLoading,
@@ -60,6 +69,9 @@ export const IntelligentTableRow = ({ ticker }) => {
   if (isLoading || !statsData || !balanceSheetData)
     return <TransitionText text={"Loading"} />;
   if (statsError || balanceSheetError) return <TransitionText text={"Error"} />;
+
+  console.log("statsData", statsData);
+  console.log("balanceSheetData", balanceSheetData);
 
   return (
     <>

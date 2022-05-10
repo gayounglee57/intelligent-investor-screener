@@ -5,7 +5,6 @@ import { IntelligentTableInput } from "./IntelligentTableInput";
 
 export const IntelligentTableBody = () => {
   const [tickers, setTickers] = React.useState([]);
-  console.log("tickers", tickers);
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {

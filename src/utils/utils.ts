@@ -90,6 +90,9 @@ export function getPeRatioEvaluation(
 ) {
   const peRatioMostRecent = priceValue / epsMostRecent;
   const peRatioTtm = priceValue / epsTtm;
+  if (peRatioMostRecent < 0 || peRatioTtm < 0) {
+    return getBooleanEmoji(false);
+  }
   const peRatioBoolean = peRatioMostRecent <= 25 && peRatioTtm <= 25;
   return getBooleanEmoji(peRatioBoolean);
 }
