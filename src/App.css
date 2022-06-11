@@ -12,6 +12,10 @@
   color: #d2af7c;
 }
 
+.Error-boundary {
+  font-size: 12px;
+}
+
 .MuiTableCell-root, .MuiFormLabel-root {
   color: white;
   vertical-align: bottom;

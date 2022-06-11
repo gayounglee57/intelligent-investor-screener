@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { useQuery } from "react-query";
 import { IntelligentTableRowUI } from "./IntelligentTableRowUI";
 import { TransitionText } from "./TransitionText";
-// import {mockData} from '../__tests__/mockStatsData.ts';
+// import { mockStatsData } from "../__tests__/mockStatsData";
 
 // config - hide api key with Node BE, Next.js BE
 const statsUrl = "https://yh-finance.p.rapidapi.com/stock/v3/get-statistics";
@@ -49,7 +49,7 @@ function useBalanceSheet(symbol: string) {
 }
 
 // function getMockData() {
-//     return mockData;
+//   return mockStatsData;
 // }
 
 export const IntelligentTableRow = ({ ticker }) => {
@@ -70,8 +70,8 @@ export const IntelligentTableRow = ({ ticker }) => {
     return <TransitionText text={"Loading"} />;
   if (statsError || balanceSheetError) return <TransitionText text={"Error"} />;
 
-  console.log("statsData", statsData);
-  console.log("balanceSheetData", balanceSheetData);
+  console.log("statsData", ticker, statsData);
+  console.log("balanceSheetData", ticker, balanceSheetData);
 
   return (
     <>
