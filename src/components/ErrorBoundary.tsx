@@ -15,8 +15,6 @@ export class ErrorBoundary extends React.Component {
   }
 
   render() {
-    console.log("rendering error boundary");
-
     if (this.state.errorInfo) {
       // Error path
       return (

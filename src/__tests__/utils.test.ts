@@ -4,8 +4,8 @@ import {
   getPriceStats,
   getLatestLongTermDebt,
 } from "../utils/utils";
-import { mockStatsData } from "./mockStatsData";
-import { mockBalanceSheetData } from "./mockBalanceSheetData";
+import { mockStatsData } from "../utils/mockStatsData";
+import { mockBalanceSheetData } from "../utils/mockBalanceSheetData";
 
 describe("utils", function () {
   it("getBooleanEmoji returns correct emojis", function () {
